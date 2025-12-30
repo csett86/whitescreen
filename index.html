@@ -42,29 +42,8 @@
             opacity: 1;
         }
         
-        /* Ensure white background in fullscreen mode */
-        body:fullscreen {
-            background-color: #ffffff;
-        }
-        
-        body:-webkit-full-screen {
-            background-color: #ffffff;
-        }
-        
-        body:-moz-full-screen {
-            background-color: #ffffff;
-        }
-        
-        body:-ms-fullscreen {
-            background-color: #ffffff;
-        }
-        
         /* Ensure white backdrop in fullscreen mode */
         body::backdrop {
-            background-color: #ffffff;
-        }
-        
-        body::-webkit-backdrop {
             background-color: #ffffff;
         }
     </style>
@@ -78,31 +57,12 @@
         
         // Function to toggle fullscreen
         function toggleFullscreen() {
-            if (!document.fullscreenElement && 
-                !document.webkitFullscreenElement && 
-                !document.mozFullScreenElement && 
-                !document.msFullscreenElement) {
+            if (!document.fullscreenElement) {
                 // Enter fullscreen
-                if (body.requestFullscreen) {
-                    body.requestFullscreen();
-                } else if (body.webkitRequestFullscreen) {
-                    body.webkitRequestFullscreen();
-                } else if (body.mozRequestFullScreen) {
-                    body.mozRequestFullScreen();
-                } else if (body.msRequestFullscreen) {
-                    body.msRequestFullscreen();
-                }
+                body.requestFullscreen();
             } else {
                 // Exit fullscreen
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+                document.exitFullscreen();
             }
         }
         
