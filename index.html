@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White Screen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        body {
+            background-color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #fullscreen-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #999999;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        body:hover #fullscreen-hint {
+            opacity: 1;
+        }
+        
+        /* Hide hint when in fullscreen */
+        body.fullscreen #fullscreen-hint {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="fullscreen-hint">Click anywhere to toggle fullscreen</div>
+    
+    <script>
+        // Get the body element
+        const body = document.body;
+        const hint = document.getElementById('fullscreen-hint');
+        
+        // Function to toggle fullscreen
+        function toggleFullscreen() {
+            if (!document.fullscreenElement && 
+                !document.webkitFullscreenElement && 
+                !document.mozFullScreenElement && 
+                !document.msFullscreenElement) {
+                // Enter fullscreen
+                if (body.requestFullscreen) {
+                    body.requestFullscreen();
+                } else if (body.webkitRequestFullscreen) {
+                    body.webkitRequestFullscreen();
+                } else if (body.mozRequestFullScreen) {
+                    body.mozRequestFullScreen();
+                } else if (body.msRequestFullscreen) {
+                    body.msRequestFullscreen();
+                }
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+        
+        // Add click event listener
+        body.addEventListener('click', toggleFullscreen);
+        
+        // Listen for fullscreen changes to update body class
+        function updateFullscreenState() {
+            if (document.fullscreenElement || 
+                document.webkitFullscreenElement || 
+                document.mozFullScreenElement || 
+                document.msFullscreenElement) {
+                body.classList.add('fullscreen');
+            } else {
+                body.classList.remove('fullscreen');
+            }
+        }
+        
+        // Add event listeners for fullscreen state changes
+        document.addEventListener('fullscreenchange', updateFullscreenState);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenState);
+        document.addEventListener('mozfullscreenchange', updateFullscreenState);
+        document.addEventListener('msfullscreenchange', updateFullscreenState);
+    </script>
+</body>
+</html>
