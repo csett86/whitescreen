@@ -60,6 +60,13 @@
             if (!document.fullscreenElement) {
                 // Enter fullscreen
                 body.requestFullscreen();
+
+                try {
+                    const wakeLock = await navigator.wakeLock.request("screen");
+                    console.log("WakeLock aquired, screen will stay on");
+                } catch (err) {
+                    console.log(`WakeLock could not be aquired due to ${err.name}, ${err.message}`);
+                }
             } else {
                 // Exit fullscreen
                 document.exitFullscreen();
